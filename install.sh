@@ -6,10 +6,7 @@ curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-6
 tar -xvzf ioncube_loaders_lin_x86-64.tar.gz
 rm ioncube_loaders_lin_x86-64.tar.gz
 cd ioncube
-
-php_ext_dir="$(php -r 'echo ini_get("extension_dir");' 2>/dev/null)"
 php_version="$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;' 2>/dev/null)"
-
 if [ "$php_version" == "7.4" ]; then
     php_ext_dir="$(php -i | grep extension_dir 2>/dev/null | head -n 1 | cut --characters=31-39)"
     else
