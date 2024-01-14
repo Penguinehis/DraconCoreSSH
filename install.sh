@@ -2,9 +2,16 @@
 apt update
 apt upgrade -y
 apt install php-cli php-curl php-sqlite3 git -y
+tipo="$(uname -m)"
+if ["$tipo" == aarch64 ];then
+curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_aarch64.tar.gz
+tar -xvzf ioncube_loaders_lin_aarch64.tar.gz
+rm ioncube_loaders_lin_aarch64.tar.gz
+else
 curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -xvzf ioncube_loaders_lin_x86-64.tar.gz
 rm ioncube_loaders_lin_x86-64.tar.gz
+fi
 cd ioncube
 
 
