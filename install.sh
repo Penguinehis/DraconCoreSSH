@@ -11,7 +11,7 @@ cd ioncube
 php_version="$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;' 2>/dev/null)"
 
 if [ "$php_version" == "7.4" ]; then
-    php_ext_dir="$(php -r 'echo ini_get("extension_dir");' 2>/dev/null)"
+    php_ext_dir="$(php -i | grep extension_dir 2>/dev/null | head -n 1 | cut --characters=31-39)"
     cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
     cd ..
     rm -rf ioncube
