@@ -1,4 +1,6 @@
 #!/bin/bash
+apt update
+apt upgrade -y
 apt install php-cli php-curl php-sqlite3 git -y
 curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 tar -xvzf ioncube_loaders_lin_x86-64.tar.gz
