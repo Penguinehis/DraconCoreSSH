@@ -21,7 +21,7 @@ rm -rf ioncube
 cat > /etc/php/${php_version}/cli/conf.d/00-ioncube-loader.ini << EOF
 zend_extension=ioncube_loader_lin_${php_version}.so
 EOF
-
+rm -rf /opt/DragonCore
 git clone https://github.com/Penguinehis/DraconCoreSSH.git /opt/DragonCore
 rm -rf /opt/DragonCore/aarch64
 rm -rf /opt/DragonCore/x86_64
