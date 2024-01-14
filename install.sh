@@ -20,17 +20,15 @@ cat > /etc/php/${php_version}/cli/conf.d/00-ioncube-loader.ini << EOF
 zend_extension=ioncube_loader_lin_${php_version}.so
 EOF
 
-cat > /etc/php/${php_version}/apache2/conf.d/00-ioncube-loader.ini << EOF
-zend_extension=ioncube_loader_lin_${php_version}.so
-EOF
-
 git clone https://github.com/Penguinehis/DraconCoreSSH.git /opt/DragonCore
 rm -rf /opt/DragonCore/aarch64
 rm -rf /opt/DragonCore/x86_64
 curl -s -L -o /opt/DragonCore/menu https://raw.githubusercontent.com/Penguinehis/DraconCoreSSH/main/$(uname -m)/menu
 curl -s -L -o /opt/DragonCore/proxy https://raw.githubusercontent.com/Penguinehis/DraconCoreSSH/main/$(uname -m)/proxy
 curl -s -L -o /opt/DragonCore/badvpn-udpgw https://raw.githubusercontent.com/Penguinehis/DraconCoreSSH/main/$(uname -m)/badvpn-udpgw
-chmod +x /opt/DragonCore *
+cd /opt/DragonCore
+chmod +x *
+cd $HOME
 echo -n "/opt/DragonCore/menu" > /bin/menu
 chmod +x /bin/menu
 existing_cron=$(crontab -l 2>/dev/null | grep -F "*/5 * * * * find /run/user -maxdepth 1 -mindepth 1 -type d -exec mount -o remount,size=1M {} \;")
