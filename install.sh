@@ -18,6 +18,7 @@ apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
 fi
 apt update
 apt upgrade -y
+apt install screen htop nload lsof curl -y
 cake=$(uname -m)
 if [ "$cake" = "x86_64" ]; then
 curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
