@@ -9,7 +9,7 @@ if grep -q "$repository" /etc/apt/sources.list.d/*; then
     found=true
 fi
 if [ "$found" = true ]; then
-   
+echo "OK"   
 else
     apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
     add-apt-repository ppa:ondrej/php
