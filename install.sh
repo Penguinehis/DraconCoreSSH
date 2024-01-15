@@ -13,32 +13,19 @@ tar -xvzf ioncube_loaders_lin_aarch64.tar.gz
 rm ioncube_loaders_lin_aarch64.tar.gz
 fi
 cd ioncube
-
-
-php_version="$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;' 2>/dev/null)"
-
-if [ "$php_version" == "7.4" ]; then
-    php_ext_dir="$(php -i | grep extension_dir 2>/dev/null | head -n 1 | cut --characters=31-39)"
-    cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
-    cd ..
-    rm -rf ioncube
-    cat > /etc/php/${php_version}/cli/conf.d/00-ioncube-loader.ini << EOF
-    zend_extension=ioncube_loader_lin_${php_version}.so
+php_ext_dir="$(command php -i | grep extension_dir 2>'/dev/null' \
+| command head -n 1 \
+| command cut --characters=31-38)"
+php_version="$(command php --version 2>'/dev/null' \
+| command head -n 1 \
+| command cut --characters=5-7)"
+cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
+cd ..
+rm -rf ioncube
+cat > /etc/php/${php_version}/cli/conf.d/00-ioncube-loader.ini << EOF
+zend_extension=ioncube_loader_lin_${php_version}.so
 EOF
-    else
-    php_ext_dir="$(command php -i | grep extension_dir 2>'/dev/null' \
-    | command head -n 1 \
-    | command cut --characters=31-38)"
-    php_version="$(command php --version 2>'/dev/null' \
-    | command head -n 1 \
-    | command cut --characters=5-7)"
-    cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
-    cd ..
-    rm -rf ioncube
-    cat > /etc/php/${php_version}/cli/conf.d/00-ioncube-loader.ini << EOF
-    zend_extension=ioncube_loader_lin_${php_version}.so
-EOF
-fi
+
 
 
 cd /opt/
@@ -57,11 +44,11 @@ echo -n "/opt/DragonCore/menu" > /bin/menu
 chmod +x /bin/menu
 existing_cron=$(crontab -l 2>/dev/null | grep -F "*/5 * * * * find /run/user -maxdepth 1 -mindepth 1 -type d -exec mount -o remount,size=1M {} \;")
 if [ -z "$existing_cron" ]; then
-    (crontab -l 2>/dev/null; echo "*/5 * * * * find /run/user -maxdepth 1 -mindepth 1 -type d -exec mount -o remount,size=1M {} \;") | crontab -
+(crontab -l 2>/dev/null; echo "*/5 * * * * find /run/user -maxdepth 1 -mindepth 1 -type d -exec mount -o remount,size=1M {} \;") | crontab -
 fi
 if dpkg -s libssl1.1 &>/dev/null; then
-    echo "libssl1.1 is already installed."
+echo "libssl1.1 is already installed."
 else
-    echo "deb http://security.ubuntu.com/ubuntu focal-security main" | sudo tee /etc/apt/sources.list.d/focal-security.list
-    sudo apt-get update && sudo apt-get install -y libssl1.1
+echo "deb http://security.ubuntu.com/ubuntu focal-security main" | sudo tee /etc/apt/sources.list.d/focal-security.list
+sudo apt-get update && sudo apt-get install -y libssl1.1
 fi
