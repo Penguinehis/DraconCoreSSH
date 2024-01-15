@@ -19,7 +19,6 @@ php_version="$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;' 2>/dev
 
 if [ "$php_version" == "7.4" ]; then
     php_ext_dir="$(php -i | grep extension_dir 2>/dev/null | head -n 1 | cut --characters=31-39)"
-    rm -rf /usr/lib/php/${php_ext_dir}/ioncube_loader_lin_${php_version}.so
     cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
     cd ..
     rm -rf ioncube
@@ -33,7 +32,6 @@ EOF
     php_version="$(command php --version 2>'/dev/null' \
     | command head -n 1 \
     | command cut --characters=5-7)"
-    rm -rf /usr/lib/php/${php_ext_dir}/ioncube_loader_lin_${php_version}.so
     cp ioncube_loader_lin_${php_version}.so /usr/lib/php/${php_ext_dir}
     cd ..
     rm -rf ioncube
