@@ -1,12 +1,5 @@
-repository="ppa:ondrej/php"
-found=false
-if grep -q "$repository" /etc/apt/sources.list; then
-    found=true
-fi
-if grep -q "$repository" /etc/apt/sources.list.d/*; then
-    found=true
-fi
-if [ "$found" = true ]; then
+reposi=$(find /etc/apt/ -name *.list | xargs cat | grep  ^[[:space:]]*deb | grep -q "ppa.launchpad.net/ondrej/php" && echo 1 || echo 0)
+if [ "$reposi" = "1" ]; then
 echo "OK"   
 else
     apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
@@ -18,6 +11,7 @@ php_version2="$(command php --version 2>'/dev/null' \
 | command cut --characters=5-7)"
 if [ "$php_version2" != "8.2" ]; then
 apt purge php-cli php-curl php-sqlite3 -y
+apt autoremove -y
 apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
 else
 apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
