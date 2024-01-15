@@ -1,5 +1,3 @@
-apt update
-apt upgrade -y
 repository="ppa:ondrej/php"
 found=false
 if grep -q "$repository" /etc/apt/sources.list; then
@@ -24,7 +22,8 @@ apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
 else
 apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
 fi
-
+apt update
+apt upgrade -y
 cake=$(uname -m)
 if [ "$cake" = "x86_64" ]; then
 curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
