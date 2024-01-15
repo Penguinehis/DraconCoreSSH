@@ -1,6 +1,30 @@
 apt update
 apt upgrade -y
-apt install php-cli php-curl php-sqlite3 git -y
+repository="ppa:ondrej/php"
+found=false
+if grep -q "$repository" /etc/apt/sources.list; then
+    found=true
+fi
+if grep -q "$repository" /etc/apt/sources.list.d/*; then
+    found=true
+fi
+if [ "$found" = true ]; then
+   
+else
+    apt install lsb-release ca-certificates apt-transport-https software-properties-common -y
+    add-apt-repository ppa:ondrej/php
+    apt update
+fi
+php_version2="$(command php --version 2>'/dev/null' \
+| command head -n 1 \
+| command cut --characters=5-7)"
+if [ "$php_version2" != "8.2" ]; then
+apt purge php-cli php-curl php-sqlite3 -y
+apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
+else
+apt install php8.2-cli php8.2-curl php8.2-sqlite3 git -y
+fi
+
 cake=$(uname -m)
 if [ "$cake" = "x86_64" ]; then
 curl -O https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
