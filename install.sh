@@ -1,4 +1,3 @@
-#!/bin/bash
 apt update
 apt upgrade -y
 apt install php-cli php-curl php-sqlite3 git -y
